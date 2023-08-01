@@ -1,11 +1,15 @@
-import { Model } from "mongoose";
+import {z} from 'zod';
 
-export type IUser = {
-  id: string;
-  role: string;
-  password: string;
-  // buyer?: Types.ObjectId | IBuyer;
-  // seller?: Types.ObjectId | ISeller;
-};
+const createUserZodSchema = z.object({
+  body: z.object({
+    role: z.string({
+      required_error: "role is required"
+    }),
+    password: z.string().optional()
+  })
+});
 
-export type UserModel = Model<IUser, Record<string, unknown>>;
+export const UserValidation = {
+  createUserZodSchema
+}
+
