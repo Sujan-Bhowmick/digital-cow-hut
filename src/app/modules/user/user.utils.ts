@@ -1,23 +1,53 @@
-import { User } from "./user.model";
+import { User } from './user.model';
+export const findLastBuyerId = async () => {
+  const lastBuyer = await User.findOne(
+    {
+      role: 'buyer',
+    },
+    { id: 1, _id: 0 },
+  )
+    .sort({
+      createdAt: -1,
+    })
+    .lean();
 
-// let lastUserId = 0;
+  return lastBuyer?.id ? lastBuyer.id.substring(2) : undefined;
+};
 
+export const generateBuyerId = async (): Promise<string> => {
+  const currnetId =
+    (await findLastBuyerId()) || (0).toString().padStart(5, '0');
 
-export const findLastUserId = async() => {
-  const lastUser = await User.findOne({}, {id:1, _id:0}).sort({
-    createdAt: -1
-  }).lean();
+  // increment by 1
+  let incrementedId = (parseInt(currnetId) + 1).toString().padStart(5, '0');
 
-  return lastUser?.id
-}
+  incrementedId = `B-${incrementedId}`;
+  return incrementedId;
+};
 
+// Seller id
+export const findLastSellerId = async () => {
+  const lastSeller = await User.findOne(
+    {
+      role: 'seller',
+    },
+    { id: 1, _id: 0 },
+  )
+    .sort({
+      createdAt: -1,
+    })
+    .lean();
 
-export const generateUserId = async() => {
+  return lastSeller?.id ? lastSeller.id.substring(2) : undefined;
+};
 
-const currnetId = (await findLastUserId()) || (0).toString().padStart(5, '0')
+export const generateSellerId = async () => {
+  const currnetId =
+    (await findLastSellerId()) || (0).toString().padStart(5, '0');
 
-// increment by 1
-const incrementedId = (parseInt(currnetId) + 1).toString().padStart(5, '0')
+  // increment by 1
+  let incrementedId = (parseInt(currnetId) + 1).toString().padStart(5, '0');
 
-return incrementedId;
+  incrementedId = `S-${incrementedId}`;
+  return incrementedId;
 };

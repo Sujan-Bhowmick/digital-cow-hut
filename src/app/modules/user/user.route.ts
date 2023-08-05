@@ -5,6 +5,12 @@ import validateRequest from "../../middleware/validateRequest";
 
 const router = express.Router();
 
-router.post('/create-user', validateRequest(UserValidation.createUserZodSchema),UserController.createUser);
+router.post('/create-seller', 
+validateRequest(UserValidation.createSellerZodSchema),
+ UserController.createSeller);
 
-export default router
+router.post('/create-buyer', 
+validateRequest(UserValidation.createBuyerZodSchema),
+ UserController.createBuyer);
+
+export const UserRoutes = router

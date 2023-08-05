@@ -16,14 +16,14 @@ const userSchema = new Schema<IUser, UserModel>(
       type: String,
       required: true,
     },
-    // buyer: {
-    //   type: Schema.Types.ObjectId,
-    //   ref: 'Student',
-    // },
-    // seller: {
-    //   type: Schema.Types.ObjectId,
-    //   ref: 'Faculty',
-    // },
+    buyer: {
+      type: Schema.Types.ObjectId,
+      ref: 'Buyer',
+    },
+    seller: {
+      type: Schema.Types.ObjectId,
+      ref: 'Seller',
+    },
   },
   {
     timestamps: true,

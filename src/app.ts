@@ -1,19 +1,20 @@
-import express, { Application , NextFunction, Request, Response } from 'express'
-import cors from 'cors'
-const app: Application = express()
-import usersRouter from './app/modules/user/user.route'
-import globalErrorHandler from './app/middleware/globalErrorHandler'
+import express, { Application, NextFunction, Request, Response } from 'express';
+import cors from 'cors';
+const app: Application = express();
+import globalErrorHandler from './app/middleware/globalErrorHandler';
+import routes from './app/router';
+import notFoundError from './app/middleware/notFoundError';
 
-app.use(cors())
+
+app.use(cors());
 
 //parser
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Application Routes
-app.use('/api/v1/users/', usersRouter)
-
-
+// app.use('/api/v1/users/', usersRouter)
+app.use('/api/v1/', routes);
 
 // testing
 // app.get('/', (req: Request, res: Response, next: NextFunction) => {
@@ -22,6 +23,13 @@ app.use('/api/v1/users/', usersRouter)
 // });
 
 // global error handler
-app.use(globalErrorHandler)
+app.use(globalErrorHandler);
+app.use(notFoundError)
 
-export default app
+// const testId = async () => {
+//   const testId = await generateSellerId();
+//   console.log(testId);
+// };
+
+// testId();
+export default app;
