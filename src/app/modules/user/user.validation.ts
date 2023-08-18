@@ -23,10 +23,7 @@ const createSellerZodSchema = z.object({
       }),
       income: z.number({
         required_error: "Income is required"
-      }),
-      seller: z.number({
-        required_error: "seller is required"
-      }),
+      })
     })
   })
 });
@@ -57,9 +54,31 @@ const createBuyerZodSchema = z.object({
     })
   })
 });
+const createAdminZodSchema = z.object({
+  body: z.object({
+    password: z.string().optional(),
+    admin:z.object({
+      name: z.object({
+        firstName: z.string({
+          required_error: "First name is required"
+        }),
+        lastName: z.string({
+          required_error: "Last name is required"
+        }),
+      }),
+      phoneNumber: z.string({
+        required_error: "Phone No is required"
+      }),
+      address: z.string({
+        required_error: "Address is required"
+      })
+    })
+  })
+});
 
 export const UserValidation = {
   createSellerZodSchema,
+  createAdminZodSchema,
   createBuyerZodSchema
 }
 

@@ -13,7 +13,6 @@ const createCow = catchAsync(
     const { ...cow } = req.body;
     const result = await CowService.createCow(cow);
 
-   
     sendResponse<ICow>(res, {
       statusCode: httpStatus.OK,
       success: true,
@@ -25,16 +24,14 @@ const createCow = catchAsync(
 
 const getAllCows = catchAsync(
   async (req: Request, res: Response,) => {
-    
+    console.log(req.headers.authorization)
+    console.log(req.user)
     const paginationOptions = pick(req.query, paginationFields)
-    console.log(paginationOptions)
 
     const filters = pick(req.query, cowFilterableFields)
 
     const result = await CowService.getAllCows(paginationOptions, filters);
     
-    
-     
     sendResponse<ICow[]>(res, {
       statusCode: httpStatus.OK,
       success: true,

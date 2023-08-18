@@ -21,7 +21,8 @@ const buyerSchema = new Schema<IBuyer, BuyerModel>(
     },
     phoneNumber: {
       type: String,
-      required: true
+      required: true, 
+      unique: true
     },
     address: {
       type: String,

@@ -51,3 +51,30 @@ export const generateSellerId = async () => {
   incrementedId = `S-${incrementedId}`;
   return incrementedId;
 };
+
+// Admin id
+export const findLastAdminId = async () => {
+  const lastAdmin = await User.findOne(
+    {
+      role: 'admin',
+    },
+    { id: 1, _id: 0 },
+  )
+    .sort({
+      createdAt: -1,
+    })
+    .lean();
+
+  return lastAdmin?.id ? lastAdmin.id.substring(2) : undefined;
+};
+
+export const generateAdminId = async () => {
+  const currnetId =
+    (await findLastAdminId()) || (0).toString().padStart(5, '0');
+
+  // increment by 1
+  let incrementedId = (parseInt(currnetId) + 1).toString().padStart(5, '0');
+
+  incrementedId = `A-${incrementedId}`;
+  return incrementedId;
+};

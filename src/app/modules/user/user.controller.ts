@@ -7,7 +7,6 @@ import httpStatus from "http-status";
 
 const createSeller: RequestHandler = catchAsync(async(req, res) => {
 
-  
     const {seller,...userData} = req.body
     const result = await UserService.createSeller(seller, userData);
 
@@ -22,7 +21,6 @@ const createSeller: RequestHandler = catchAsync(async(req, res) => {
 
 const createBuyer: RequestHandler = catchAsync(async(req, res) => {
 
-  
     const {buyer,...userData} = req.body
     const result = await UserService.createBuyer(buyer, userData);
 
@@ -35,7 +33,22 @@ const createBuyer: RequestHandler = catchAsync(async(req, res) => {
  
 })
 
+const createAdmin: RequestHandler = catchAsync(async(req, res) => {
+   
+    const {admin,...userData} = req.body
+    const result = await UserService.createAdmin(admin, userData);
+
+    sendResponse(res,{
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Admin created Successfully",
+      data: result
+     })
+ 
+})
+
  export const UserController = {
   createSeller,
-  createBuyer
+  createBuyer,
+  createAdmin
  }
