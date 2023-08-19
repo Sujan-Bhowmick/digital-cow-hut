@@ -11,4 +11,5 @@ const validateRequest_1 = __importDefault(require("../../middleware/validateRequ
 const router = express_1.default.Router();
 router.post('/create-seller', (0, validateRequest_1.default)(user_validation_1.UserValidation.createSellerZodSchema), user_controller_1.UserController.createSeller);
 router.post('/create-buyer', (0, validateRequest_1.default)(user_validation_1.UserValidation.createBuyerZodSchema), user_controller_1.UserController.createBuyer);
+router.post('/create-admin', (0, validateRequest_1.default)(user_validation_1.UserValidation.createAdminZodSchema), user_controller_1.UserController.createAdmin);
 exports.UserRoutes = router;

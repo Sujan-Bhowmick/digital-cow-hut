@@ -8,6 +8,8 @@ const user_route_1 = require("../modules/user/user.route");
 const seller_route_1 = require("../modules/seller/seller.route");
 const buyer_route_1 = require("../modules/buyer/buyer.route");
 const cow_route_1 = require("../modules/cow/cow.route");
+const admin_route_1 = require("../modules/admin/admin.route");
+const auth_route_1 = require("../modules/auth/auth.route");
 const router = express_1.default.Router();
 const moduleRoutes = [
     {
@@ -23,8 +25,16 @@ const moduleRoutes = [
         route: seller_route_1.SellerRoutes
     },
     {
+        path: '/admin',
+        route: admin_route_1.AdminRoutes
+    },
+    {
         path: '/cows',
         route: cow_route_1.CowRoutes
+    },
+    {
+        path: '/auth',
+        route: auth_route_1.AuthRoutes
     }
 ];
 moduleRoutes.forEach((route) => router.use(route.path, route.route));

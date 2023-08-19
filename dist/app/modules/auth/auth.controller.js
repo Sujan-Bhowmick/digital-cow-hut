@@ -23,43 +23,44 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserController = void 0;
-const user_service_1 = require("./user.service");
+exports.AuthController = void 0;
 const catchAsync_1 = __importDefault(require("../../../shared/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../../shared/sendResponse"));
+const auth_service_1 = require("./auth.service");
 const http_status_1 = __importDefault(require("http-status"));
-const createSeller = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const _a = req.body, { seller } = _a, userData = __rest(_a, ["seller"]);
-    const result = yield user_service_1.UserService.createSeller(seller, userData);
+const config_1 = __importDefault(require("../../../config"));
+const loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const loginData = __rest(req.body, []);
+    const result = yield auth_service_1.AuthService.loginUser(loginData);
+    const { refreshToken } = result, others = __rest(result, ["refreshToken"]);
+    const cookieOptions = {
+        secure: config_1.default.env === "production",
+        httpOnly: true
+    };
+    res.cookie('refreshToken', refreshToken, cookieOptions);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
-        message: "Seller created Successfully",
-        data: result
+        message: 'User Logged In successfully',
+        data: others,
     });
 }));
-const createBuyer = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const _b = req.body, { buyer } = _b, userData = __rest(_b, ["buyer"]);
-    const result = yield user_service_1.UserService.createBuyer(buyer, userData);
+const refreshToken = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { refreshToken } = req.cookies;
+    const result = yield auth_service_1.AuthService.refreshToken(refreshToken);
+    const cookieOptions = {
+        secure: config_1.default.env === "production",
+        httpOnly: true
+    };
+    res.cookie('refreshToken', refreshToken, cookieOptions);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
-        message: "Buyer created Successfully",
-        data: result
+        message: 'User Logged In successfully',
+        data: result,
     });
 }));
-const createAdmin = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const _c = req.body, { admin } = _c, userData = __rest(_c, ["admin"]);
-    const result = yield user_service_1.UserService.createAdmin(admin, userData);
-    (0, sendResponse_1.default)(res, {
-        statusCode: http_status_1.default.OK,
-        success: true,
-        message: "Admin created Successfully",
-        data: result
-    });
-}));
-exports.UserController = {
-    createSeller,
-    createBuyer,
-    createAdmin
+exports.AuthController = {
+    loginUser,
+    refreshToken
 };

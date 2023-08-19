@@ -1,11 +1,12 @@
-import express, { Application, NextFunction, Request, Response } from 'express';
+import express, { Application,  Request, Response } from 'express';
 import cors from 'cors';
-const app: Application = express();
+
 import globalErrorHandler from './app/middleware/globalErrorHandler';
 import routes from './app/router';
 import notFoundError from './app/middleware/notFoundError';
 import cookieParser from 'cookie-parser';
 
+const app: Application = express();
 app.use(cors());
 app.use(cookieParser())
 
@@ -17,11 +18,9 @@ app.use(express.urlencoded({ extended: true }));
 // app.use('/api/v1/users/', usersRouter)
 app.use('/api/v1/', routes);
 
-// testing
-// app.get('/', (req: Request, res: Response, next: NextFunction) => {
-//   // throw new Error('ore baba error')
-//   // next('ore baba error')
-// });
+app.get('/', async (req: Request, res: Response) => {
+  res.send('Working Successfuly');
+});
 
 // global error handler
 app.use(globalErrorHandler);

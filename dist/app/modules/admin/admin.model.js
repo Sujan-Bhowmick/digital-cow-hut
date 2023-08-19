@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Seller = void 0;
+exports.Admin = void 0;
 const mongoose_1 = require("mongoose");
-const sellerSchema = new mongoose_1.Schema({
+const adminSchema = new mongoose_1.Schema({
     id: {
         type: String,
         required: true,
@@ -22,25 +22,17 @@ const sellerSchema = new mongoose_1.Schema({
     },
     phoneNumber: {
         type: String,
-        unique: true,
         required: true,
+        unique: true
     },
     address: {
         type: String,
         required: true
-    },
-    budget: {
-        type: Number,
-        required: true
-    },
-    income: {
-        type: Number,
-        required: true
-    },
+    }
 }, {
     timestamps: true,
     toJSON: {
         virtuals: true,
     },
 });
-exports.Seller = (0, mongoose_1.model)('Seller', sellerSchema);
+exports.Admin = (0, mongoose_1.model)('Admin', adminSchema);

@@ -25,10 +25,7 @@ const createSellerZodSchema = zod_1.z.object({
             }),
             income: zod_1.z.number({
                 required_error: "Income is required"
-            }),
-            seller: zod_1.z.number({
-                required_error: "seller is required"
-            }),
+            })
         })
     })
 });
@@ -59,7 +56,29 @@ const createBuyerZodSchema = zod_1.z.object({
         })
     })
 });
+const createAdminZodSchema = zod_1.z.object({
+    body: zod_1.z.object({
+        password: zod_1.z.string().optional(),
+        admin: zod_1.z.object({
+            name: zod_1.z.object({
+                firstName: zod_1.z.string({
+                    required_error: "First name is required"
+                }),
+                lastName: zod_1.z.string({
+                    required_error: "Last name is required"
+                }),
+            }),
+            phoneNumber: zod_1.z.string({
+                required_error: "Phone No is required"
+            }),
+            address: zod_1.z.string({
+                required_error: "Address is required"
+            })
+        })
+    })
+});
 exports.UserValidation = {
     createSellerZodSchema,
+    createAdminZodSchema,
     createBuyerZodSchema
 };

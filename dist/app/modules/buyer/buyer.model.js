@@ -22,7 +22,8 @@ const buyerSchema = new mongoose_1.Schema({
     },
     phoneNumber: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     address: {
         type: String,
